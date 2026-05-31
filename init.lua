@@ -62,6 +62,7 @@ require("telescope").setup({
 local b = require("telescope.builtin")
 vim.keymap.set("n", "<space>sf", b.find_files)
 vim.keymap.set("n", "<space>sg", b.live_grep)
+vim.keymap.set("n", "<space><space>", b.buffers)
 vim.keymap.set("n", "<space>sc", function()
 	b.find_files({ cwd = vim.fn.stdpath("config") })
 end)
