@@ -6,22 +6,22 @@ vim.pack.add({
 	"https://github.com/stevearc/conform.nvim",
 	"https://github.com/nvim-lua/plenary.nvim",
 	"https://github.com/nvim-telescope/telescope.nvim",
+	"https://github.com/nvim-mini/mini.nvim",
 })
 
-vim.cmd.colorscheme("flexoki-light")
+vim.cmd.colorscheme("flexoki")
 
 vim.opt.tabstop = 5
 vim.opt.shiftwidth = 5
 vim.opt.number = true
+vim.opt.signcolumn = "yes:1"
 vim.opt.clipboard = "unnamedplus"
 vim.opt.scrolloff = 10
 vim.opt.list = true
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
-vim.g.have_nerd_font = true
-
 -- [[ TREESITTER ]]
-local languages = { "odin" }
+local languages = { "odin", "c", "javascript", "typescript" }
 require("nvim-treesitter").install(languages)
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = languages,
@@ -41,7 +41,7 @@ vim.lsp.enable("lua_ls")
 vim.lsp.enable("stylua")
 require("mason").setup({})
 
--- [[ CONFORM ]]
+-- [[ CONFORM - FORMATTING ]]
 require("conform").setup({
 	formatters_by_ft = {
 		odin = { "odinfmt", "stylua" },
@@ -66,6 +66,13 @@ vim.keymap.set("n", "<space><space>", b.buffers)
 vim.keymap.set("n", "<space>sc", function()
 	b.find_files({ cwd = vim.fn.stdpath("config") })
 end)
+
+-- [[ Mini ]]
+local statusline = require("mini.statusline")
+statusline.setup({ use_icons = true })
+statusline.section_location = function()
+	return "%2l:%-2v"
+end
 
 -- Clear highlights on search when pressing <Esc> in normal mode.
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
