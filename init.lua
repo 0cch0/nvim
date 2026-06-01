@@ -21,7 +21,7 @@ vim.opt.list = true
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
 -- [[ TREESITTER ]]
-local languages = { "odin", "c", "javascript", "typescript" }
+local languages = { "odin", "c", "html", "javascript", "typescript", "astro" }
 require("nvim-treesitter").install(languages)
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = languages,
@@ -31,6 +31,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- [[ LSP ]]
+require("mason").setup({})
 vim.lsp.enable("ols")
 vim.lsp.config("lua_ls", {
 	settings = {
@@ -39,7 +40,6 @@ vim.lsp.config("lua_ls", {
 })
 vim.lsp.enable("lua_ls")
 vim.lsp.enable("stylua")
-require("mason").setup({})
 
 -- [[ CONFORM - FORMATTING ]]
 require("conform").setup({
