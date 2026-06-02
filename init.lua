@@ -6,6 +6,8 @@ vim.opt.clipboard = "unnamedplus"
 vim.opt.scrolloff = 10
 vim.opt.list = true
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+vim.opt.undofile = true
+vim.opt.swapfile = true
 
 vim.pack.add({ "https://github.com/kepano/flexoki-neovim" })
 vim.cmd.colorscheme("flexoki")
@@ -75,11 +77,12 @@ end
 vim.pack.add({ "https://github.com/lewis6991/gitsigns.nvim" })
 require("gitsigns").setup({
 	signs = {
-		add = { text = "+" },
-		change = { text = "~" },
+		add = { text = "┃+" },
+		change = { text = "┃~" },
 		delete = { text = "_" },
 		topdelete = { text = "‾" },
 		changedelete = { text = "~" },
+		untracked = { text = "┆" },
 	},
 })
 
