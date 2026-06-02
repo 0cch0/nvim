@@ -1,16 +1,3 @@
-vim.pack.add({
-	"https://github.com/kepano/flexoki-neovim",
-	"https://github.com/nvim-treesitter/nvim-treesitter",
-	"https://github.com/neovim/nvim-lspconfig",
-	"https://github.com/mason-org/mason.nvim",
-	"https://github.com/stevearc/conform.nvim",
-	"https://github.com/nvim-lua/plenary.nvim",
-	"https://github.com/nvim-telescope/telescope.nvim",
-	"https://github.com/nvim-mini/mini.nvim",
-})
-
-vim.cmd.colorscheme("flexoki")
-
 vim.opt.tabstop = 5
 vim.opt.shiftwidth = 5
 vim.opt.number = true
@@ -20,8 +7,12 @@ vim.opt.scrolloff = 10
 vim.opt.list = true
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
--- [[ TREESITTER ]]
-local languages = { "odin", "c", "html", "javascript", "typescript", "astro" }
+vim.pack.add({ "https://github.com/kepano/flexoki-neovim" })
+vim.cmd.colorscheme("flexoki")
+
+--  [[ TREESITTER ]]
+vim.pack.add({ "https://github.com/nvim-treesitter/nvim-treesitter" })
+local languages = { "c", "odin", "html", "javascript", "typescript", "astro" }
 require("nvim-treesitter").install(languages)
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = languages,
@@ -31,6 +22,8 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- [[ LSP ]]
+vim.pack.add({ "https://github.com/neovim/nvim-lspconfig" })
+vim.pack.add({ "https://github.com/mason-org/mason.nvim" })
 require("mason").setup({})
 vim.lsp.enable("ols")
 vim.lsp.config("lua_ls", {
@@ -41,7 +34,8 @@ vim.lsp.config("lua_ls", {
 vim.lsp.enable("lua_ls")
 vim.lsp.enable("stylua")
 
--- [[ CONFORM - FORMATTING ]]
+-- [[ FORMATTING ]]
+vim.pack.add({ "https://github.com/stevearc/conform.nvim" })
 require("conform").setup({
 	formatters_by_ft = {
 		odin = { "odinfmt", "stylua" },
@@ -53,26 +47,41 @@ require("conform").setup({
 })
 
 -- [[ TELESCOPE ]]
+vim.pack.add({ "https://github.com/nvim-telescope/telescope.nvim" })
+vim.pack.add({ "https://github.com/nvim-lua/plenary.nvim" })
 require("telescope").setup({
 	pickers = {
 		find_files = { theme = "dropdown" },
 		live_grep = { theme = "dropdown" },
 	},
 })
-local b = require("telescope.builtin")
-vim.keymap.set("n", "<space>sf", b.find_files)
-vim.keymap.set("n", "<space>sg", b.live_grep)
-vim.keymap.set("n", "<space><space>", b.buffers)
+local tb = require("telescope.builtin")
+vim.keymap.set("n", "<space>sf", tb.find_files)
+vim.keymap.set("n", "<space>sg", tb.live_grep)
+vim.keymap.set("n", "<space><space>", tb.buffers)
 vim.keymap.set("n", "<space>sc", function()
-	b.find_files({ cwd = vim.fn.stdpath("config") })
+	tb.find_files({ cwd = vim.fn.stdpath("config") })
 end)
 
--- [[ Mini ]]
+-- [[ STATUSLINE ]]
+vim.pack.add({ "https://github.com/nvim-mini/mini.statusline" })
 local statusline = require("mini.statusline")
 statusline.setup({ use_icons = true })
 statusline.section_location = function()
-	return "%2l:%-2v"
+	return "%2l:%-2v - %p%%"
 end
+
+-- [[ GIT ]]
+vim.pack.add({ "https://github.com/lewis6991/gitsigns.nvim" })
+require("gitsigns").setup({
+	signs = {
+		add = { text = "+" },
+		change = { text = "~" },
+		delete = { text = "_" },
+		topdelete = { text = "‾" },
+		changedelete = { text = "~" },
+	},
+})
 
 -- Clear highlights on search when pressing <Esc> in normal mode.
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
