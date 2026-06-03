@@ -6,7 +6,7 @@ vim.opt.clipboard = "unnamedplus"
 vim.opt.scrolloff = 10
 vim.opt.list = true
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
-vim.opt.swapfile = true
+vim.opt.swapfile = false
 
 vim.pack.add({ "https://github.com/kepano/flexoki-neovim" })
 vim.cmd.colorscheme("flexoki")
@@ -25,21 +25,22 @@ vim.api.nvim_create_autocmd("FileType", {
 -- [[ LSP ]]
 vim.pack.add({ "https://github.com/neovim/nvim-lspconfig" })
 vim.pack.add({ "https://github.com/mason-org/mason.nvim" })
-require("mason").setup({})
-vim.lsp.enable("ols")
-vim.lsp.config("lua_ls", {
-	settings = {
-		Lua = { format = { enable = false } },
-	},
-})
-vim.lsp.enable("lua_ls")
-vim.lsp.enable("stylua")
+require("mason").setup()
+local servers = {
+	clangd = {},
+	ols = {},
+	stylua = {},
+}
+for name, opts in pairs(servers) do
+	vim.lsp.config(name, opts)
+	vim.lsp.enable(name)
+end
 
 -- [[ FORMATTING ]]
 vim.pack.add({ "https://github.com/stevearc/conform.nvim" })
 require("conform").setup({
 	formatters_by_ft = {
-		odin = { "odinfmt", "stylua" },
+		odin = { "odinfmt" },
 	},
 	format_on_save = {
 		timeout_ms = 500,
