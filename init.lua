@@ -6,7 +6,6 @@ vim.opt.clipboard = "unnamedplus"
 vim.opt.scrolloff = 10
 vim.opt.list = true
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
-vim.opt.undofile = true
 vim.opt.swapfile = true
 
 vim.pack.add({ "https://github.com/kepano/flexoki-neovim" })
