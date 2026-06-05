@@ -11,7 +11,7 @@ vim.opt.swapfile = false
 vim.pack.add({ "https://github.com/kepano/flexoki-neovim" })
 vim.cmd.colorscheme("flexoki")
 
---  [[ TREESITTER ]]
+-- [[ TREESITTER ]]
 vim.pack.add({ "https://github.com/nvim-treesitter/nvim-treesitter" })
 local languages = { "c", "odin", "html", "javascript", "typescript", "astro" }
 require("nvim-treesitter").install(languages)
@@ -39,7 +39,7 @@ end
 vim.api.nvim_create_autocmd("BufWritePre", {
 	desc = "Format on save",
 	pattern = "*",
-	callback = function(args)
+	callback = function()
 		vim.lsp.buf.format({ builtin = true, async = false })
 	end,
 })
