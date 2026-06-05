@@ -82,9 +82,6 @@ require("gitsigns").setup({
 	},
 })
 
--- Clear highlights on search when pressing <Esc> in normal mode.
-vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
-
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
 	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
@@ -92,3 +89,10 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.highlight.on_yank()
 	end,
 })
+
+-- Clear highlights on search when pressing <Esc> in normal mode.
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+
+vim.keymap.set("n", "<C-i>", function()
+	vim.diagnostic.open_float()
+end)
