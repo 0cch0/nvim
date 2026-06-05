@@ -35,17 +35,12 @@ for name, opts in pairs(servers) do
 	vim.lsp.config(name, opts)
 	vim.lsp.enable(name)
 end
-
--- [[ FORMATTING ]]
-vim.pack.add({ "https://github.com/stevearc/conform.nvim" })
-require("conform").setup({
-	formatters_by_ft = {
-		odin = { "odinfmt" },
-	},
-	format_on_save = {
-		timeout_ms = 500,
-		lsp_format = "fallback",
-	},
+-- format on save
+vim.api.nvim_create_autocmd("BufWritePre", {
+	pattern = "*",
+	callback = function(args)
+		vim.lsp.buf.format({ builtin = true, async = false })
+	end,
 })
 
 -- [[ TELESCOPE ]]
