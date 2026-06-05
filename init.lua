@@ -35,8 +35,9 @@ for name, opts in pairs(servers) do
 	vim.lsp.config(name, opts)
 	vim.lsp.enable(name)
 end
--- format on save
+
 vim.api.nvim_create_autocmd("BufWritePre", {
+	desc = "Format on save",
 	pattern = "*",
 	callback = function(args)
 		vim.lsp.buf.format({ builtin = true, async = false })
