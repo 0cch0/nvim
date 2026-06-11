@@ -26,14 +26,14 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.pack.add({ "https://github.com/neovim/nvim-lspconfig" })
 vim.pack.add({ "https://github.com/mason-org/mason.nvim" })
 require("mason").setup()
-local servers = {
+local server_list = {
 	clangd = {},
 	ols = {},
 	stylua = {},
 }
-for name, opts in pairs(servers) do
-	vim.lsp.config(name, opts)
-	vim.lsp.enable(name)
+for server, opts in pairs(server_list) do
+	vim.lsp.config(server, opts)
+	vim.lsp.enable(server)
 end
 
 vim.api.nvim_create_autocmd("BufWritePre", {
@@ -96,3 +96,5 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set("n", "<C-i>", function()
 	vim.diagnostic.open_float()
 end)
+
+vim.keymap.set("i", "<C-space>", "<C-x><C-o>")
