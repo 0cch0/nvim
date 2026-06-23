@@ -9,7 +9,11 @@ vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 vim.opt.swapfile = false
 
 vim.pack.add({ "https://github.com/kepano/flexoki-neovim" })
-vim.cmd.colorscheme("flexoki")
+vim.pack.add({ "https://github.com/folke/tokyonight.nvim" })
+vim.pack.add({ "https://github.com/ellisonleao/gruvbox.nvim" })
+vim.pack.add({ "https://github.com/sainnhe/gruvbox-material" })
+
+vim.cmd.colorscheme("gruvbox-material")
 
 -- [[ TREESITTER ]]
 vim.pack.add({ "https://github.com/nvim-treesitter/nvim-treesitter" })
@@ -27,9 +31,8 @@ vim.pack.add({ "https://github.com/neovim/nvim-lspconfig" })
 vim.pack.add({ "https://github.com/mason-org/mason.nvim" })
 require("mason").setup()
 local server_list = {
-	clangd = {},
-	ols = {},
 	stylua = {},
+	ols = {},
 }
 for server, opts in pairs(server_list) do
 	vim.lsp.config(server, opts)
@@ -66,7 +69,7 @@ vim.pack.add({ "https://github.com/nvim-mini/mini.statusline" })
 local statusline = require("mini.statusline")
 statusline.setup({ use_icons = true })
 statusline.section_location = function()
-	return "%2l:%-2v - %p%%"
+	return "%2l:%-2v ┃ %p%%"
 end
 
 -- [[ GIT ]]
@@ -93,7 +96,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 -- Clear highlights on search when pressing <Esc> in normal mode.
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
-vim.keymap.set("n", "<C-i>", function()
+vim.keymap.set("n", "<space>e", function()
 	vim.diagnostic.open_float()
 end)
 
