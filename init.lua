@@ -9,8 +9,6 @@ vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 vim.opt.swapfile = false
 
 vim.pack.add({ "https://github.com/kepano/flexoki-neovim" })
-vim.pack.add({ "https://github.com/folke/tokyonight.nvim" })
-vim.pack.add({ "https://github.com/ellisonleao/gruvbox.nvim" })
 vim.pack.add({ "https://github.com/sainnhe/gruvbox-material" })
 
 vim.cmd.colorscheme("gruvbox-material")
